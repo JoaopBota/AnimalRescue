@@ -17,14 +17,14 @@ export default makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    borderRadius: '15px',
+    borderRadius: '30px',
     height: '100%',
     position: 'relative',
   },
   overlay: {
     position: 'absolute',
     top: '20px',
-    left: '20px',
+    left: '10px',
     color: 'white',
   },
   overlay2: {

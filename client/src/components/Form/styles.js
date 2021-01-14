@@ -10,7 +10,6 @@ export default makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   form: {
-    display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
