@@ -1,39 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import useStyles from './styles';
-import { createPost } from '../../actions/posts'
+import { createPost, updatePost } from '../../actions/posts'
 
 
 
 
 
 const Form = ({ currentId, setCurrentId}) => {
-    const [postData, setPostData] = useState({
-         title:'', dogname:'', breed:'', location:'', message: '', creator: '', selectedFile:'' , phonenumber:''});
+    const [postData, setPostData] = useState({title:'', dogname:'', breed:'', location:'', message: '', creator: '', selectedFile:'' , phonenumber:''});
+    const post = useSelector((state) => currentId ? state.posts.find((p) => p._id = currentId) : null);
     const classes = useStyles();
     const dispatch = useDispatch();
+    useEffect(() => {
+        if(post) setPostData(post);
+    }, [post])
 
     const handleSubmit = (e) =>{
         e.preventDefault();
 
         if(currentId) {
             dispatch(updatePost(currentId, postData));
+            clear();
         } else {
             dispatch(createPost(postData));
+            clear();
         }
-
-        
     }
+    
     const clear = () => {
-
+        setCurrentId(null);
+        setPostData({title:'', dogname:'', breed:'', location:'', message: '', creator: '', selectedFile:'' , phonenumber:''});
     }
 
     return(
         <Paper className = {classes.paper}>
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-            <Typography variant='h6'>Adding a Dog</Typography>
+            <Typography variant='h6'>{currentId ? 'Editing a Post' : 'Adding a Dog'}</Typography>
             <TextField name="title" variant="outlined" label="Title" fullWidth value={postData.title} onChange={(e) => setPostData({ ... postData, title: e.target.value })}/>
             <TextField name="dogname" variant="outlined" label="Dog Name" fullWidth value={postData.dogname} onChange={(e) => setPostData({ ... postData, dogname: e.target.value })}/>
             <TextField name="breed" variant="outlined" label="Breed" fullWidth value={postData.breed} onChange={(e) => setPostData({ ... postData, breed: e.target.value })}/>
