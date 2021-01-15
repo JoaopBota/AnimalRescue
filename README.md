@@ -1,6 +1,6 @@
 # webstack
 
-Animal Rescue is a Full data-driven full stack webapplication.
+Animal Rescue is a Full data-driven full stack web application.
 
 ## Setup
 
